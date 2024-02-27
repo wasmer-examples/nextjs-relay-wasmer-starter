@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
+    "edge:build-dev": "NODE_ENV=development npx @cloudflare/next-on-pages",
     "edge:build": "npx @cloudflare/next-on-pages",
     "edge:preview": "wasmer run . --net",
     "relay": "relay-compiler"
