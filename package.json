@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "mkdir -p __generated__ && concurrently \"relay-compiler --watch\" \"next dev\"",
     "build": "relay-compiler --validate && next build",
+    "build-dev": "NODE_ENV=development next build",
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
