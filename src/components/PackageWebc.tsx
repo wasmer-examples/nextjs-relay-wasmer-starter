@@ -22,7 +22,7 @@ export default function Issue(props: { queryRef: PreloadedQuery<PackageWebcQuery
     <Suspense fallback="Loading (client side)...">
       <h1>{data.node?.id}</h1>
       <p>{data.node?.webcUrl}</p>
-      <p>Author: {data.node?.createdAt}</p>
+      <p>Created at: {data.node?.createdAt}</p>
     </Suspense>
   );
 }

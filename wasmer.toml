@@ -1,12 +1,12 @@
 [package]
 name = "wasmer-examples/next-relay-wasmer-starter"
-version = "0.2.1"
+version = "0.3.0"
 description = "Next.js Website (with Relay!) Wasmer starter package"
 readme = "README.md"
 repository = "https://github.com/wasmer-examples/next-relay-wasmer-starter"
 
 [dependencies]
-"wasmer/winterjs" = "^0.3"
+"wasmer/winterjs" = "^0.4.4"
 
 [fs]
 "/web" = ".vercel/output/static"
