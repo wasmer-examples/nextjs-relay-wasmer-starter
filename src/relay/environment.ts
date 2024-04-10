@@ -16,8 +16,10 @@ const CACHE_TTL = 5 * 1000; // 5 seconds, to resolve preloaded results
 
 export async function networkFetch(
   request: RequestParameters,
-  variables: Variables
+  variables: Variables,
+  token?: string,
 ): Promise<GraphQLResponse> {
+  console.log("FETCHING GRAPHQL", request.name);
   const resp = await fetch(HTTP_ENDPOINT, {
     method: "POST",
     headers: {
@@ -49,14 +51,12 @@ export async function networkFetch(
   return json;
 }
 
-export const responseCache: QueryResponseCache | null = IS_SERVER
-  ? null
-  : new QueryResponseCache({
-      size: 100,
-      ttl: CACHE_TTL,
-    });
+function createNetwork(token?: string) {
+  const responseCache = new QueryResponseCache({
+    size: 100,
+    ttl: CACHE_TTL,
+  });
 
-function createNetwork() {
   async function fetchResponse(
     params: RequestParameters,
     variables: Variables,
@@ -72,27 +72,18 @@ function createNetwork() {
       }
     }
 
-    return networkFetch(params, variables);
+    return networkFetch(params, variables, token);
   }
 
   const network = Network.create(fetchResponse);
   return network;
 }
 
-function createEnvironment() {
-  return new Environment({
-    network: createNetwork(),
-    store: new Store(RecordSource.create()),
+export function createEnvironment(token?: string, records?: any) {
+  let environment = new Environment({
+    network: createNetwork(token),
+    store: new Store(new RecordSource(records)),
     isServer: IS_SERVER,
   });
-}
-
-export const environment = createEnvironment();
-
-export function getCurrentEnvironment() {
-  if (IS_SERVER) {
-    return createEnvironment();
-  }
-
   return environment;
 }
